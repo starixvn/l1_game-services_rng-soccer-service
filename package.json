@@ -38,7 +38,7 @@
     "resolutions": {
         "sc-game-base": "4.0.1",
         "sc-base-apis": "1.18.2",
-        "mongoose": "5.13.20"
+        "mongoose": "8.13.1"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.12.11",
