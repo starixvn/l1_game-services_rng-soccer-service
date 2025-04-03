@@ -14,7 +14,7 @@ const path = require("path");
 
 const scriptName = path.basename(__filename);
 const processId = getProcessId(scriptName);
-const overrideGameConfigs = {botenabled: false};
+const overrideGameConfigs = { botenabled: false };
 startService(processId, overrideGameConfigs);
 
 const appConfigs = buildConfigs(processId);
@@ -39,7 +39,7 @@ describe("place bet", () => {
                 if (inGameData.remainingTime && !receivedRemainingTime) {
                     receivedRemainingTime = true;
                     setTimeout(() => {
-                        client.emit(eventTypes.bet, { betChoice: "dragon", amount: 101 });
+                        client.emit(eventTypes.bet, { betChoice: "home", amount: 101 });
                     }, getTimeOutToPlacingBetTime(inGameData.remainingTime, gameSettings.durations) * 1000);
                 }
             });
@@ -47,10 +47,10 @@ describe("place bet", () => {
             // Assert
             client.on(socketOptions.gameName, (data) => {
                 if (data.endBet) {
-                    expect(data.betChoice).toBe("dragon");
+                    expect(data.betChoice).toBe("home");
                     expect(data.endBet).toBe(101);
-                    expect(data.ownBets).toEqual({ dragon: 101 });
-                    expect(data.ownChip).toEqual({ betChoice: "dragon", amount: 101 });
+                    expect(data.ownBets).toEqual({ home: 101 });
+                    expect(data.ownChip).toEqual({ betChoice: "home", amount: 101 });
 
                     client.close();
                     done();
@@ -73,7 +73,7 @@ describe("place bet", () => {
                 if (inGameData.remainingTime && !receivedRemainingTime) {
                     receivedRemainingTime = true;
                     setTimeout(() => {
-                        client.emit(eventTypes.bet, { betChoice: "dragon", amount: 100 });
+                        client.emit(eventTypes.bet, { betChoice: "home", amount: 100 });
                     }, getTimeOutToBetInvalid(inGameData.remainingTime, gameSettings.durations) * 1000);
                 }
             });

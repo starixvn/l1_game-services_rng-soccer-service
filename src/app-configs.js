@@ -31,7 +31,7 @@ export default {
     },
     sentry: {
         sentryUrl: "http://e6e2bdc2d3ab40c682d0d27c1b1f912a@sentry.lumigame.com/13",
-        logIdentifier: "DragonTigerFight",
+        logIdentifier: "RNGSoccer",
         env: "LOCAL",
     },
     authenticateSettings: {

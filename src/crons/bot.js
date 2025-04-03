@@ -7,13 +7,11 @@ export default class Bot extends Table.Crons.TableGameBot {
         super(definition, gameData, publisher, userInfosRepository, tempBetsRepository);
 
         this.appConfigs = appConfigs;
-        this.betChoiceRatio = { DragonTiger: 70, DragonColor: 14, TigerColor: 14, Tie: 2};
+        this.betChoiceRatio = { HomeAway: 70, Draw: 2 };
+        this.drawOpts = ["draw"];
 
-        this.dragonTigerOpts = ["dragon", "tiger"];
-        this.dragonColorOpts = ["blackDragon", "redDragon"];
-        this.tigerColorOpts = ["blackTiger", "redTiger"];
-        this.tieOpts = ["tie"];
-        this.hedgeBetGroups = [this.dragonTigerOpts];
+        this.homeAwayOpts = ["home", "away"];
+        this.hedgeBetGroups = [this.homeAwayOpts];
         this.smallTicketRatio = 70;
     }
 
@@ -24,13 +22,9 @@ export default class Bot extends Table.Crons.TableGameBot {
 
     resetAllBets() {
         this.allBets = {
-            dragon: 0,
-            tiger: 0,
-            tie: 0,
-            blackDragon: 0,
-            redDragon: 0,
-            blackTiger: 0,
-            redTiger: 0,
+            home: 0,
+            away: 0,
+            draw: 0,
         };
 
         this.smallTickets = 0;
@@ -41,39 +35,25 @@ export default class Bot extends Table.Crons.TableGameBot {
 
         const betChoiceRatios = [
             {
-                group: this.dragonTigerOpts,
-                underBetRatio:
-                    (this.getTotalAmountOnChoiceGroup(this.dragonTigerOpts) * 100) / totalBotBet < this.betChoiceRatio.DragonTiger,
+                group: this.homeAwayOpts,
+                underBetRatio: (this.getTotalAmountOnChoiceGroup(this.homeAwayOpts) * 100) / totalBotBet < this.betChoiceRatio.HomeAway,
             },
             {
-                group: this.dragonColorOpts,
-                underBetRatio:
-                    (this.getTotalAmountOnChoiceGroup(this.dragonColorOpts) * 100) / totalBotBet <
-                    this.betChoiceRatio.DragonColor,
-            },
-            {
-                group: this.tigerColorOpts,
-                underBetRatio: (this.getTotalAmountOnChoiceGroup(this.tigerColorOpts) * 100) / totalBotBet < this.betChoiceRatio.TigerColor,
-            },
-            {
-                group: this.tieOpts,
-                underBetRatio: (this.getTotalAmountOnChoiceGroup(this.tieOpts) * 100) / totalBotBet < this.betChoiceRatio.Tie,
+                group: this.drawOpts,
+                underBetRatio: (this.getTotalAmountOnChoiceGroup(this.drawOpts) * 100) / totalBotBet < this.betChoiceRatio.Draw,
             },
         ];
 
         const underRatioGroups = helpers.arrayHelper.shuffle(betChoiceRatios.filter((data) => data.underBetRatio));
 
         const choice =
-            underRatioGroups.length > 0
-                ? this.chance.pickone(underRatioGroups[0].group)
-                : this.chance.pickone(this.dragonTigerOpts);
+            underRatioGroups.length > 0 ? this.chance.pickone(underRatioGroups[0].group) : this.chance.pickone(this.homeAwayOpts);
 
-        const hedgeBetGroup = this.hedgeBetGroups.find(group => group.includes(choice));
-        if(hedgeBetGroup){
+        const hedgeBetGroup = this.hedgeBetGroups.find((group) => group.includes(choice));
+        if (hedgeBetGroup) {
             const oppositeChoice = choice === hedgeBetGroup[0] ? hedgeBetGroup[1] : hedgeBetGroup[0];
             return bot.choices.includes(oppositeChoice) ? oppositeChoice : choice;
-        }
-        else{
+        } else {
             return choice;
         }
     }
@@ -85,7 +65,7 @@ export default class Bot extends Table.Crons.TableGameBot {
         const botMaxBet = gameConfigs.bot_maxbet;
         const maxBet = Math.min(maxBetPerChoice, botMaxBet);
 
-        if (this.dragonTigerOpts.includes(choice) || this.dragonColorOpts.includes(choice) || this.tigerColorOpts.includes(choice)) {
+        if (this.homeAwayOpts.includes(choice)) {
             const isSmallTicket = this.totalTickets === 0 ? true : (this.smallTickets * 100) / this.totalTickets < this.smallTicketRatio;
             const maxBetOfSmallTicket = Math.min(minBet * 50, botMaxBet * 0.3);
             return isSmallTicket ? maxBetOfSmallTicket : maxBet;
@@ -119,7 +99,7 @@ export default class Bot extends Table.Crons.TableGameBot {
         super.updateBotInRoomData(bot, choice, amount, balance);
 
         this.allBets[choice] = this.allBets[choice] ? this.allBets[choice] + amount : amount;
-        this.smallTickets += (amount <= this.getMinBet() * 50) ? 1 : 0;
+        this.smallTickets += amount <= this.getMinBet() * 50 ? 1 : 0;
     }
 
     convertAmountToChip(amount) {

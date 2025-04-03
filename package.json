@@ -1,11 +1,11 @@
 {
-    "name": "dragon-tiger-fight-service",
+    "name": "rng-soccer-service",
     "version": "1.0.0",
     "description": "",
     "main": "./src/app.js",
     "repository": {
         "type": "git",
-        "url": "https://git3.nexdev.net/l1/game-services/dragon-tiger-fight-service.git"
+        "url": "https://git3.nexdev.net/l1/game-services/rng-soccer.gitt"
     },
     "author": "pentagon",
     "license": "ISC",

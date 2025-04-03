@@ -6,7 +6,7 @@ const path = require("path");
 
 const scriptName = path.basename(__filename);
 const processId = getProcessId(scriptName);
-const overrideGameConfigs = {botenabled: false};
+const overrideGameConfigs = { botenabled: false };
 startService(processId, overrideGameConfigs);
 
 const appConfigs = buildConfigs(processId);
@@ -25,38 +25,30 @@ describe("when get history", () => {
         });
         const expectedData = [
             {
-                dragon: 10,
-                tiger: 0,
-                tie: 100,
-                blackDragon: 0,
-                redDragon: 0,
-                blackTiger: 0,
-                redTiger: 0,
+                home: 10,
+                away: 0,
+                draw: 100,
                 freeBet: false,
                 name: "NormalUser",
-                odds: { dragon: 1.97, tiger: 1.97, tie: 3.76, blackDragon: 3.76, redDragon: 14.5, blackTiger: 14.5, redTiger: 2.5 },
+                odds: { home: 1.97, away: 1.97 },
                 rate: 1,
-                betLogDetails: [{choice: "tie", amount: 100, rebet: false, rate: 1, roundId: 1190120}],
+                betLogDetails: [{ choice: "home", amount: 100, rebet: false, rate: 1, roundId: 1190120 }],
                 roundId: 1190120,
                 phien: 1190120,
-                totalAmount: 110
+                totalAmount: 110,
             },
             {
-                dragon: 102,
-                tiger: 0,
-                tie: 12,
-                blackDragon: 0,
-                redDragon: 0,
-                blackTiger: 0,
-                redTiger: 0,
+                home: 102,
+                away: 0,
+                draw: 12,
                 freeBet: false,
                 name: "NormalUser",
-                odds: { dragon: 1.97, tiger: 1.97, tie: 3.76, blackDragon: 3.76, redDragon: 14.5, blackTiger: 14.5, redTiger: 2.5 },
+                odds: { home: 1.97, away: 1.97 },
                 rate: 1,
                 betLogDetails: [],
                 roundId: 1190119,
                 phien: 1190119,
-                totalAmount: 114
+                totalAmount: 114,
             },
         ];
 
@@ -90,4 +82,3 @@ describe("when get history", () => {
         });
     });
 });
-;

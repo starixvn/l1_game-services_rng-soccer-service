@@ -14,7 +14,7 @@ const path = require("path");
 
 const scriptName = path.basename(__filename);
 const processId = getProcessId(scriptName);
-const overrideGameConfigs = {botenabled: false};
+const overrideGameConfigs = { botenabled: false };
 startService(processId, overrideGameConfigs);
 
 const appConfigs = buildConfigs(processId);
@@ -25,33 +25,32 @@ describe("rebet", () => {
         checkConnect(processId, done);
     });
 
-        it("should return rebet data", (done) => {
-            // Arrange
-            const client = new GameClientDriver(socketOptions, initUserSession(normalUser));
-            client.handleSignedInEvent(() => {
-                client.sendInGameEvent();
-            });
-            let receivedRemainingTime = false;
-
-            // Act
-            client.on(socketOptions.gameName, (inGameData) => {
-                if (inGameData.remainingTime && !receivedRemainingTime) {
-                    receivedRemainingTime = true;
-                    setTimeout(() => {
-                        client.emit("rebet", { m: 1 });
-                    }, getTimeOutToPlacingBetTime(inGameData.remainingTime, gameSettings.durations) * 1000);
-                }
-            });
-
-            // Assert
-            client.on(socketOptions.gameName, (data) => {
-                if (data.rebet) {                    
-                    expect(data.ownBets).toEqual({ dragon: 102, tie: 12 });
-
-                    client.close();
-                    done();
-                }
-            });
+    it("should return rebet data", (done) => {
+        // Arrange
+        const client = new GameClientDriver(socketOptions, initUserSession(normalUser));
+        client.handleSignedInEvent(() => {
+            client.sendInGameEvent();
         });
-    
+        let receivedRemainingTime = false;
+
+        // Act
+        client.on(socketOptions.gameName, (inGameData) => {
+            if (inGameData.remainingTime && !receivedRemainingTime) {
+                receivedRemainingTime = true;
+                setTimeout(() => {
+                    client.emit("rebet", { m: 1 });
+                }, getTimeOutToPlacingBetTime(inGameData.remainingTime, gameSettings.durations) * 1000);
+            }
+        });
+
+        // Assert
+        client.on(socketOptions.gameName, (data) => {
+            if (data.rebet) {
+                expect(data.ownBets).toEqual({ home: 102, draw: 12 });
+
+                client.close();
+                done();
+            }
+        });
+    });
 });

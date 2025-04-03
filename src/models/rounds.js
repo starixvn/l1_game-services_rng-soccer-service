@@ -1,24 +1,20 @@
 import mongoose from "mongoose";
 
-const modelName = "dragontigerfight_rounds";
+const modelName = "rngsoccer_rounds";
 
 const resultSchema = new mongoose.Schema(
     {
-        dragon: { type: Object },
-        tiger: { type: Object },
+        home: { type: Object },
+        away: { type: Object },
     },
     { _id: false }
 );
 
 const settlementResultSchema = new mongoose.Schema(
     {
-        dragon: { type: Boolean, default: false },
-        tiger: { type: Boolean, default: false },
-        tie: { type: Boolean, default: false },
-        blackDragon: { type: Boolean, default: false },
-        redDragon: { type: Boolean, default: false },
-        blackTiger: { type: Boolean, default: false },
-        redTiger: { type: Boolean, default: false },
+        home: { type: Boolean, default: false },
+        away: { type: Boolean, default: false },
+        draw: { type: Boolean, default: false },
     },
     { _id: false }
 );

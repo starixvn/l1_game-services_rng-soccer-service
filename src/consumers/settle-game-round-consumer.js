@@ -9,10 +9,10 @@ export default class SettleGameRoundConsumer extends Table.EventConsumers.TableS
             .filter(([choice, win]) => choices.includes(choice))
             .reduce(
                 (result, [choice, win]) => {
-                    if (choice === constants.choiceNames.tie && win) {
-                        const dragonBet = bet[constants.choiceNames.dragon] ?? 0;
-                        const tigerBet = bet[constants.choiceNames.tiger] ?? 0;
-                        const refund = (dragonBet + tigerBet)/2;
+                    if (choice === constants.choiceNames.draw && win) {
+                        const homeBet = bet[constants.choiceNames.home] ?? 0;
+                        const awayBet = bet[constants.choiceNames.away] ?? 0;
+                        const refund = (homeBet + awayBet) / 2;
 
                         result.totalWin += refund;
                     }

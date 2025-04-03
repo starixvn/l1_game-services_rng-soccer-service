@@ -14,7 +14,7 @@ const path = require("path");
 
 const scriptName = path.basename(__filename);
 const processId = getProcessId(scriptName);
-const overrideGameConfigs = {botenabled: false};
+const overrideGameConfigs = { botenabled: false };
 const overrideAppConfigs = { enabledBoostedOdds: false };
 startService(processId, overrideGameConfigs, overrideAppConfigs);
 
@@ -41,16 +41,14 @@ describe("when user joins game", () => {
                 expect(inGameData.gameConfigs.minBet).toEqual(1);
                 expect(inGameData.gameConfigs.maxBet).toEqual(3000);
                 expect(inGameData.gameConfigs.maxBetPerChoices).toStrictEqual({
-                    dragon: 3000,
-                    tiger: 3000,
-                    tie: 3000,
-                    blackDragon: 3000,
-                    redDragon: 3000,
-                    blackTiger: 3000,
-                    redTiger: 3000,
+                    home: 3000,
+                    away: 3000,
+                    draw: 3000,
                 });
                 expect(inGameData.gameConfigs.odds).toStrictEqual({
-                    dragon: 1.97, tiger: 1.97, tie: 3.76, blackDragon: 3.76, redDragon: 14.5, blackTiger: 14.5, redTiger: 2.5
+                    home: 1.97,
+                    away: 1.97,
+                    draw: 3.76,
                 });
 
                 normalUserClientDriver.close();

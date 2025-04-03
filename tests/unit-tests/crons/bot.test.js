@@ -11,13 +11,9 @@ describe("bot test", () => {
     const gameData = new Table.TableGameData(0);
     gameData.gameConfigs = {
         choices_maxbet: {
-            dragon: 10000,
-            tiger: 10000,
-            tie: 500,
-            blackDragon: 500,
-            redDragon: 200,
-            blackTiger: 200,
-            redTiger: 200,
+            home: 10000,
+            away: 10000,
+            draw: 500,
         },
         minbet: 1,
         bot_maxbet: 2000,
@@ -47,48 +43,44 @@ describe("bot test", () => {
     describe("resetAllBets", () => {
         it("Returns default values", () => {
             botInstance.smallTickets = 10;
-    
+
             // act
             botInstance.resetAllBets();
-    
+
             /// assert
             expect(botInstance.smallTickets).toEqual(0);
         });
-    })
+    });
 
     describe("getBetChoice", () => {
         beforeEach(() => {
             botInstance.resetAllBotData();
         });
 
-        it("should return dragon tiger options when they are not reached", () => {
+        it("should return home away options when they are not reached", () => {
             botInstance.allBets = {
-                dragon: 400,
-                tiger: 300,
-                tie: 200,
-                blackDragon: 200,
-                redDragon: 100,
-                blackTiger: 100,
-                redTiger: 100,
+                home: 400,
+                away: 300,
+                draw: 200,
             };
 
             const choice = botInstance.getBetChoice(bot);
 
-            expect(botInstance.dragonTigerOpts).toContain(choice);
+            expect(botInstance.homeAwayOpts).toContain(choice);
         });
 
-        it("should return dragon tiger options as default", () => {
+        it("should return home away options as default", () => {
             botInstance.resetAllBets();
 
             const choice = botInstance.getBetChoice(bot);
 
-            expect(botInstance.dragonTigerOpts).toContain(choice);
+            expect(botInstance.homeAwayOpts).toContain(choice);
         });
     });
 
     describe("getMaxBet", () => {
         it("should return value between min and max bet config", () => {
-            const choice = "dragon";
+            const choice = "home";
             const { bot_maxbet, minbet, choices_maxbet } = gameData.gameConfigs;
             const maxBet = Math.min(bot_maxbet, choices_maxbet[choice]);
 
@@ -102,98 +94,98 @@ describe("bot test", () => {
         it("calls super.updateBotInRoomData", () => {
             // arrange
             spyOn(Table.Crons.TableGameBot.prototype, "updateBotInRoomData");
-    
+
             // act
-            botInstance.updateBotInRoomData(bot, "dragon", 10, 100);
-    
+            botInstance.updateBotInRoomData(bot, "home", 10, 100);
+
             // assert
             expect(Table.Crons.TableGameBot.prototype.updateBotInRoomData).toHaveBeenCalled();
         });
-    })    
+    });
 
     describe("resetAllBotData", () => {
         it("Calls specific functions", () => {
             // arrange
             spyOn(Table.Crons.TableGameBot.prototype, "resetAllBotData");
             spyOn(botInstance, "resetAllBets");
-    
+
             // act
             botInstance.resetAllBotData();
-    
+
             // assert
             expect(Table.Crons.TableGameBot.prototype.resetAllBotData).toHaveBeenCalled();
             expect(botInstance.resetAllBets).toHaveBeenCalled();
         });
-    })
-   
+    });
+
     describe("shouldAddBot", () => {
         it("should add bot when botsInRoom < maxNumberOfBots and random is inOutValues", () => {
             // arrange
-            botInstance.botsInRoom = {"1": {}, "2": {}};
+            botInstance.botsInRoom = { 1: {}, 2: {} };
             botInstance.maxNumberOfBots = 3;
-    
+
             // act
             const result = botInstance.shouldAddBot(3);
-    
+
             // assert
             expect(result).toBe(true);
-        })
+        });
 
         it("should NOT add bot when botsInRoom >= maxNumberOfBots", () => {
             // arrange
-            botInstance.botsInRoom = {"1": {}, "2": {}};
+            botInstance.botsInRoom = { 1: {}, 2: {} };
             botInstance.maxNumberOfBots = 2;
-    
+
             // act
             const result = botInstance.shouldAddBot(3);
-    
+
             // assert
             expect(result).toBe(false);
-        })
+        });
 
         it("should NOT add bot when random is not inOutValues", () => {
             // arrange
-            botInstance.botsInRoom = {"1": {}, "2": {}};
+            botInstance.botsInRoom = { 1: {}, 2: {} };
             botInstance.maxNumberOfBots = 3;
-    
+
             // act
             const result = botInstance.shouldAddBot(4);
-    
+
             // assert
             expect(result).toBe(false);
-        })
-    })
+        });
+    });
 
     describe("getBotsToBet", () => {
         it("when botsToBet < max numberBotsToBet - return all botsToBet", () => {
-             // arrange
-             botInstance.botsInRoom = {"1": {totalBet: 10, remainTickets: 2}, "2": {totalBet: 11, remainTickets: 2}};
-     
-             // act
-             const result = botInstance.getBotsToBet();
-     
-             // assert
-             expect(result.length).toBe(2);
-        })
+            // arrange
+            botInstance.botsInRoom = { 1: { totalBet: 10, remainTickets: 2 }, 2: { totalBet: 11, remainTickets: 2 } };
+
+            // act
+            const result = botInstance.getBotsToBet();
+
+            // assert
+            expect(result.length).toBe(2);
+        });
 
         it("when botsToBet > max numberBotsToBet - return max numberBotsToBet", () => {
             // arrange
             botInstance.botsInRoom = {
-                "1": {totalBet: 10, remainTickets: 2}, 
-                "2": {totalBet: 11, remainTickets: 2},  
-                "3": {totalBet: 11, remainTickets: 2},  
-                "4": {totalBet: 11, remainTickets: 2},
-                "5": {totalBet: 11, remainTickets: 2},
-                "6": {totalBet: 11, remainTickets: 2},
-                "7": {totalBet: 11, remainTickets: 2}
+                1: { totalBet: 10, remainTickets: 2 },
+                2: { totalBet: 11, remainTickets: 2 },
+                3: { totalBet: 11, remainTickets: 2 },
+                4: { totalBet: 11, remainTickets: 2 },
+                5: { totalBet: 11, remainTickets: 2 },
+                6: { totalBet: 11, remainTickets: 2 },
+                7: { totalBet: 11, remainTickets: 2 },
             };
             botInstance.gameData.remainingTime = 10;
-    
+
             // act
             const result = botInstance.getBotsToBet();
-    
+
             // assert
             expect(result.length).toBe(5);
-       })
-    })
+        });
+    });
 });

@@ -127,13 +127,9 @@ const randomModes = {
 };
 
 const settlementRuleEntries = Object.entries({
-    dragon: (roundResult) => roundResult.dragon.rank > roundResult.tiger.rank,
-    tiger: (roundResult) => roundResult.tiger.rank > roundResult.dragon.rank,
-    tie: (roundResult) => roundResult.tiger.rank === roundResult.dragon.rank,
-    blackDragon: (roundResult) => ["♣", "♠"].includes(suits[roundResult.dragon.suit]),
-    redDragon: (roundResult) => ["♥", "♦"].includes(suits[roundResult.dragon.suit]),
-    blackTiger: (roundResult) => ["♣", "♠"].includes(suits[roundResult.tiger.suit]),
-    redTiger: (roundResult) => ["♥", "♦"].includes(suits[roundResult.tiger.suit]),
+    home: (roundResult) => roundResult.home.rank > roundResult.away.rank,
+    away: (roundResult) => roundResult.home.rank > roundResult.away.rank,
+    draw: (roundResult) => roundResult.home.rank === roundResult.away.rank,
 });
 
 export const generateResult = (randomMode) => {
@@ -141,7 +137,7 @@ export const generateResult = (randomMode) => {
     const shuffle = chance.pickone(randomShuffles);
     const deck = shuffle(cards);
 
-    return { dragon: deck[0], tiger: deck[1] };
+    return { home: deck[0], away: deck[1] };
 };
 
 export const getSettlementResult = (roundResult) => {
@@ -152,6 +148,6 @@ export const getSettlementResult = (roundResult) => {
     }, {});
 };
 
-export const generateRawResultForHash = ({ dragon, tiger }) => {
-    return `{${ranks[dragon.rank]}${suits[dragon.suit]} ${ranks[tiger.rank]}${suits[tiger.suit]}}`;
+export const generateRawResultForHash = ({ home, away }) => {
+    return `{${ranks[home.rank]}${suits[home.suit]} ${ranks[away.rank]}${suits[away.suit]}}`;
 };

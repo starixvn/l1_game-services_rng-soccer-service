@@ -6,7 +6,7 @@ import SettleGameRoundConsumer from "../../../src/consumers/settle-game-round-co
 jest.mock("../../../src/helpers/result-helper.js");
 describe("SettleGameRoundConsumer tests", () => {
     const definition = new Table.TableGameDefinition({ id: 1, name: "game name" });
-    definition.choices = ["dragon", "tiger", "tie", "blackDragon", "redDragon", "blackTiger", "redTiger"];
+    definition.choices = ["home", "away"];
     definition.generateResult = jest.fn();
     definition.settle = jest.fn();
     const gameData = new Table.TableGameData(0);
@@ -35,38 +35,30 @@ describe("SettleGameRoundConsumer tests", () => {
 
     it("Inherit Table.EventConsumers.TableSettleGameRoundConsumer", () => {
         expect(consumer instanceof Table.EventConsumers.TableSettleGameRoundConsumer).toBeTruthy();
-    });    
+    });
 
     describe("calculateBetResult", () => {
         it("Returns correct result when win normally", () => {
             const settlementResult = {
-                dragon: false,
-                tiger: false,
-                tie: true,
-                blackDragon: false,
-                redDragon: true,
-                blackTiger: false,
-                redTiger: false,                
+                home: false,
+                away: false,
+                draw: true,
             };
-            const result = consumer.calculateBetResult(settlementResult, { tie: 10 }, { dragon: 2, tiger: 2, tie: 10, blackDragon: 2, redDragon: 2, blackTiger: 2, redTiger: 2 });
+            const result = consumer.calculateBetResult(settlementResult, { draw: 10 }, { home: 2, away: 2, draw: 10 });
 
             expect(result.netWin).toEqual(90);
-            expect(result.winningByChoices.tie).toEqual(100);
+            expect(result.winningByChoices.draw).toEqual(100);
         });
 
-        it("Returns correct result when refund by tie", () => {
+        it("Returns correct result when refund by draw", () => {
             const settlementResult = {
-                dragon: false,
-                tiger: false,
-                tie: true,
-                blackDragon: false,
-                redDragon: true,
-                blackTiger: false,
-                redTiger: false,                
+                home: false,
+                away: false,
+                draw: true,
             };
-            const result = consumer.calculateBetResult(settlementResult, { dragon: 10 }, { dragon: 2, tiger: 2, tie: 10, blackDragon: 2, redDragon: 2, blackTiger: 2, redTiger: 2 });
+            const result = consumer.calculateBetResult(settlementResult, { home: 10 }, { away: 2, away: 2, draw: 10 });
 
-            expect(result.totalWin).toEqual(5);            
+            expect(result.totalWin).toEqual(5);
         });
     });
 });
