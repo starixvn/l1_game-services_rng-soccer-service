@@ -51,4 +51,12 @@ export default {
         secretKey: "6c1f0f28-70f2-46ae-b031-22624a6cd8df",
     },
     enableMsgpackParser: true,
+    gameManagementApiSettings: {
+        BASE: "http://l2-game-management-service-sit-service:5000",
+    },
+    otel: {
+        system: "VG2",
+        enabled: true,
+        endpoint: "http://10.2.190.51:4318/v1/traces",
+    },
 };
