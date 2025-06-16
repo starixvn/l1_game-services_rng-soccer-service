@@ -2,7 +2,7 @@ import { spawn } from "child_process";
 
 export const startSetupDataProcess = (processId, overrideGameConfigs, onSetupDataDone) => {
     const setupDataProcess = spawn("node", [
-        "--es-module-specifier-resolution=node",
+        "--experimental-loader=extensionless",
         "./tests/integration-tests/_stubs/test-data-setup.js",
         "-pid",
         `${processId}`,
@@ -27,7 +27,7 @@ export const startSetupDataProcess = (processId, overrideGameConfigs, onSetupDat
 
 export const startServiceProcess = (processId, overrideAppConfigs, onServiceStarted) => {
     const serviceProcess = spawn("node", [
-        "--es-module-specifier-resolution=node",
+        "--experimental-loader=extensionless",
         "./tests/integration-tests/_stubs/game-service-app.js",
         "-pid",
         `${processId}`,
@@ -56,7 +56,6 @@ export const startService = (processId, overrideGameConfigs = {}, overrideAppCon
     let processStartService;
     const JEST_ASSERT_WAITING_RESPONSE_TIMEOUT = 50000;
     beforeAll((done) => {
-        jest.setTimeout(JEST_ASSERT_WAITING_RESPONSE_TIMEOUT);
         startSetupDataProcess(processId, overrideGameConfigs, () => {
             console.log("done setup db");
             processStartService = startServiceProcess(processId, overrideAppConfigs, () => {
@@ -64,7 +63,7 @@ export const startService = (processId, overrideGameConfigs = {}, overrideAppCon
                 done();
             });
         });
-    });
+    }, JEST_ASSERT_WAITING_RESPONSE_TIMEOUT);
 
     afterAll(() => {
         processStartService.stdin.pause();

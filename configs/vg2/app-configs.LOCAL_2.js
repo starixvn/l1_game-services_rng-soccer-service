@@ -22,7 +22,7 @@ export default {
     },
     enabledLogs: true,
     database: {
-        url: "mongodb://lmn_backend:LmnBackend@10.10.50.12:39202,10.10.50.13:39202,10.10.50.14:39202/?replicaSet=L2ppLocal&appName=DragonTigerFight",
+        url: "mongodb://lmn_backend:LmnBackend@10.10.50.12:39202,10.10.50.13:39202,10.10.50.14:39202/?replicaSet=L2ppLocal&appName=RNGSoccer",
         options: {
             dbName: "minigame",
             useNewUrlParser: true,
@@ -32,7 +32,7 @@ export default {
     },
     sentry: {
         sentryUrl: "https://acb36eb835d948d68c1aad9873754d51@sentry.lumigame.com/27",
-        logIdentifier: "DragonTigerFight",
+        logIdentifier: "RNGSoccer",
         env: "LOCAL_2",
     },
     authenticateSettings: {
@@ -52,4 +52,12 @@ export default {
         secretKey: "6c1f0f28-70f2-46ae-b031-22624a6cd8df",
     },
     enableMsgpackParser: false,
+    gameManagementApiSettings: {
+        BASE: "http://l2-game-management-service-local2-service:5000",
+    },
+    otel: {
+        system: "VG2",
+        enabled: true,
+        endpoint: "http://10.10.50.69:4318/v1/traces",
+    },
 };
