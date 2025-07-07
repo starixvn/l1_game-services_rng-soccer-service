@@ -32,7 +32,7 @@ export default {
     },
     sentry: {
         sentryUrl: "http://58fc00e79ab34a3bab04a79038760cb8@sentry-scklprod-ovs.ops-klprod.gamora.prod/8",
-        logIdentifier: "DragonTigerFight",
+        logIdentifier: "RNGSoccer",
         env: "PROD",
     },
     authenticateSettings: {
