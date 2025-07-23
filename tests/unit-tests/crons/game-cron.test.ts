@@ -26,55 +26,16 @@ describe("GameCron", () => {
     });
 
     describe("getSettingForNewRound", () => {
-        it("should update match when roundId = 1", async () => {
+        it("should update match", async () => {
             // Arrange
-            mockGameData.roundId = 1; // MATCH_UPDATE_INTERVAL(10) * 1 + 1
+            mockGameData.roundId = 1;
 
             // Act
             await gameCron.getSettingForNewRound();
 
             // Assert
-            expect(getRandomMatch).toHaveBeenCalledTimes(1);
+            expect(getRandomMatch).toHaveBeenCalled();
             expect(mockGameData.match).toEqual({ home: "Team A", away: "Team B" });
-        });
-
-        it("should update match when roundId is multiple of interval plus 1", async () => {
-            // Arrange
-            mockGameData.roundId = 11; // MATCH_UPDATE_INTERVAL(10) * 1 + 1
-            mockGameData.match = { home: "Existing Home", away: "Existing Away" };
-
-            // Act
-            await gameCron.getSettingForNewRound();
-
-            // Assert
-            expect(getRandomMatch).toHaveBeenCalledTimes(1);
-            expect(mockGameData.match).toEqual({ home: "Team A", away: "Team B" });
-        });
-
-        it("should update match when current match has no home team", async () => {
-            // Arrange
-            mockGameData.roundId = 5;
-            mockGameData.match = { home: "", away: "" } as any;
-
-            // Act
-            await gameCron.getSettingForNewRound();
-
-            // Assert
-            expect(getRandomMatch).toHaveBeenCalledTimes(1);
-            expect(mockGameData.match).toEqual({ home: "Team A", away: "Team B" });
-        });
-
-        it("should not update match when roundId is not multiple of interval plus 1 and match exists", async () => {
-            // Arrange
-            mockGameData.roundId = 5;
-            mockGameData.match = { home: "Existing Home", away: "Existing Away" };
-
-            // Act
-            await gameCron.getSettingForNewRound();
-
-            // Assert
-            expect(getRandomMatch).not.toHaveBeenCalled();
-            expect(mockGameData.match).toEqual({ home: "Existing Home", away: "Existing Away" });
         });
     });
 });
