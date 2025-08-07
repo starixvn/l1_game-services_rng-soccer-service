@@ -34,10 +34,9 @@
         "mongoose": "5.13.20",
         "random": "^3.0.6",
         "random-js": "^2.1.0",
-        "sc-game-base": "5.4.0"
+        "sc-game-base": "5.5.0"
     },
     "resolutions": {
-        "sc-base-apis": "1.18.2",
         "mongoose": "5.13.20"
     },
     "devDependencies": {

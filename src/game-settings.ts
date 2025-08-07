@@ -11,8 +11,8 @@ export default {
     id: 118,
     name: "RNGSoccer",
     durations: {
-        wholeRound: 20,
-        placingBets: 15,
+        wholeRound: 27,
+        placingBets: 20,
         lockingBet: 3,
         dealCards: 1,
     },

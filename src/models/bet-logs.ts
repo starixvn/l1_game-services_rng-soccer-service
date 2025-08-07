@@ -21,6 +21,7 @@ const Schema = new mongoose.Schema({
     playerId: { type: String },
     operatorId: { type: String, required: true },
     roundId: { type: Number, default: 0, required: true },
+    appType: { type: Number, default: 0 },
 });
 
 export default mongoose.model("rngsoccer_betlogs", Schema);

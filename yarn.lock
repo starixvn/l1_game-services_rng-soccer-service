@@ -2304,9 +2304,9 @@
   integrity sha512-gD03QcJr+AnDv4rPd76TNl14RP3bUA1s6qLaQcSM5tSLHmwPD8oFyxxGaRhUsbWf0YrQVdogj8aCWq1tqRd8fw==
 
 "@types/sc-game-base@^1.0.0":
-  version "1.0.0"
-  resolved "https://npm.lumigame.com/@types/sc-game-base/-/sc-game-base-1.0.0.tgz"
-  integrity sha512-MjACDkNSR/1CjcYxUabxl3H/E9RgH3uTeWtm1GFaN/2456Usmzwf1ir1h1u56cWrUtmRT1RWgAsgmKbJr4Wm8A==
+  version "1.1.0"
+  resolved "https://npm.lumigame.com/@types/sc-game-base/-/sc-game-base-1.1.0.tgz#dfac798fe8f48be1523088794a5f77c2f05bf995"
+  integrity sha512-vMpNaPUVdtJNt9UJqWMyftcVKlY7VWuzv2VSv5NoP/HOX5TvMSrmD1K4JIzbQnDu46wa6fGR4pDgVxW0d5/kSg==
 
 "@types/sc-game-service-integration-utils@1.0.0":
   version "1.0.0"
@@ -6996,22 +6996,13 @@ sc-api-client@1.4.0:
   dependencies:
     axios "^0.19.2"
 
-sc-base-apis@1.18.2, sc-base-apis@2.0.0:
-  version "1.18.2"
-  resolved "https://npm.lumigame.com/sc-base-apis/-/sc-base-apis-1.18.2.tgz#7fce1793048d3a6dddfd38012faaeb8fbebce43d"
-  integrity sha512-W/R9K6rb86S11PjMJMV8B4vh73i6FPHJpQAf5tztMIn1E3tHfhP7O+t4A0TcELCsxwH+hi0yAI0DMV4H1oGzzA==
+sc-base-apis@2.2.0:
+  version "2.2.0"
+  resolved "https://npm.lumigame.com/sc-base-apis/-/sc-base-apis-2.2.0.tgz#34e087625ce51bb6b70468a825aa793525dc7f6d"
+  integrity sha512-KQJOFYiMPt6L/FhC/P0LKu4zj1/rqZG3+F2qQcHpP3wDKwkP+LyKdPcTZsVYplvoDJ5/wb/QkviBBkBPeCIjwA==
   dependencies:
     moment "^2.29.4"
     sc-api-client "1.4.0"
-    sc-base-database "1.11.1"
-    sc-common "1.8.1"
-
-sc-base-database@1.11.1:
-  version "1.11.1"
-  resolved "https://npm.lumigame.com/sc-base-database/-/sc-base-database-1.11.1.tgz#25d850e83b4e07f7e6e26f3d2d1eecc11145c2cf"
-  integrity sha512-DxuFRNDDSHQglSGFsXnrcDXVs+BRxSiILBNRbJ5RistCcSbs+k7QiwYMGhCSv3FOz9J/On9jh2y3MNst/he2BA==
-  dependencies:
-    mongoose "^5.9.25"
     sc-common "1.8.1"
 
 sc-base-database@2.2.1, sc-base-database@^2.2.0:
@@ -7033,10 +7024,10 @@ sc-common@1.8.1:
     mongoose-long "^0.3.0"
     numeral "^2.0.6"
 
-sc-game-base@5.4.0:
-  version "5.4.0"
-  resolved "https://npm.lumigame.com/sc-game-base/-/sc-game-base-5.4.0.tgz"
-  integrity sha512-yEA2KNWrXgn1Heu47J+Ie9fr3Bmw1+R2meARPXl7QaU1i//s90qCAV1hBP2y2dqOuvaZQ59ndXikum7CvXJC+g==
+sc-game-base@5.5.0:
+  version "5.5.0"
+  resolved "https://npm.lumigame.com/sc-game-base/-/sc-game-base-5.5.0.tgz#6d606f3ced38f28d736cb31743934f7fa6a322b2"
+  integrity sha512-1+F5OeP4O735k0sTDjyCB6nvaf4kW2uQeBxqNZMtkYOpNv77vV7yFMkX8fXAZ1hDbwqKVSd8r9POldyCrADXaw==
   dependencies:
     awilix "^8.0.0"
     axios "^1.0.0"
@@ -7055,7 +7046,7 @@ sc-game-base@5.4.0:
     prom-client "^11.2.1"
     random-js "^2.1.0"
     randomstring "^1.3.0"
-    sc-base-apis "2.0.0"
+    sc-base-apis "2.2.0"
     sc-common "1.8.1"
     sc-game-management-client "^0.1.0"
     sc-instrument "1.1.1-beta.2"
